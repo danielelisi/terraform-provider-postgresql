@@ -225,7 +225,7 @@ func Provider() *schema.Provider {
 			"postgresql_sequences": dataSourcePostgreSQLDatabaseSequences(),
 		},
 
-		ConfigureFunc: providerConfigure,
+		ConfigureContextFunc: providerConfigure,
 	}
 }
 
@@ -330,7 +330,7 @@ func acquireAzureOauthToken(tenantId string) (string, error) {
 	return token.Token, nil
 }
 
-func providerConfigure(d *schema.ResourceData) (any, error) {
+func providerConfigure(ctx context.Context, d *schema.ResourceData) (any, error) {
 	var sslMode string
 	if sslModeRaw, ok := d.GetOk("sslmode"); ok {
 		sslMode = sslModeRaw.(string)
